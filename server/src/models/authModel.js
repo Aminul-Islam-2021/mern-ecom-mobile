@@ -1,21 +1,28 @@
 import mongoose from 'mongoose'
 
-const demoSchema=new mongoose.Schema({
-  demo1:{
+const authSchema=new mongoose.Schema({
+  username:{
     type:String,
-    required:[true,"demo1 is required"]
+    required:[true,"username is required"]
   },
-  demo2:{
-    type:Number,
-    required:[true,"demo2 is required"]
+  email:{
+    type:String,
+    required:[true,"email is required"],
+    unique:true,
+    trim:true
   }, 
-  demo3:{
-    type:mongoose.types.objectId,
-    ref:"Demo4"
-    required:[true,"demo1 is required"]
+  password:{
+    type:String,
+    required:[true,"password is required"],
+    minlength:[8,"password must be at least 8 characters"]
   },
+  role:{
+    type:String,
+    enum:["admin","user"],
+    default:"user",
+  }
 },{timestamps:true})
 
-const Demo = mongoose.model("Demo",demoSchema)
+const Auth = mongoose.model("Auth",authSchema)
 
-export default Dem
+export default Auth;
